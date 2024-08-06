@@ -1,24 +1,21 @@
 package org.example;
 
 import com.codeborne.selenide.*;
+import org.example.api.WebDriverConfig;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
 
-
-
-
 public class WildberriesAutomation {
-    public static void main(String[] args) {
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 30000;
-
+    @Test
+    public void testAddProductToCart() {
+        WebDriverConfig.setUp();
         open("https://www.wildberries.ru/");
 
         $(By.id("searchInput")).setValue("мобильный телефон").pressEnter();
 
         SelenideElement firstProduct = $$(".product-card").first().shouldBe(Condition.visible);
-
         firstProduct.click();
 
         SelenideElement addToCartButton = $(By.className("btn-main"))
@@ -36,7 +33,6 @@ public class WildberriesAutomation {
         $(By.className("basket-section")).shouldBe(Condition.visible);
 
         $(By.cssSelector(".accordion__list-item.list-item.j-b-basket-item"));
-
 
         closeWebDriver();
     }
